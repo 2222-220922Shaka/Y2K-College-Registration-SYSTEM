@@ -1,0 +1,13 @@
+{
+    "name": "Y2K_COLLEGE__REGISTRATION_SYSTEM",
+    "version": "1.0.0",
+    "main": "path/to/main.css",
+    "ignore": [
+        ".jshintrc",
+        "**/*.txt"
+    ],
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}

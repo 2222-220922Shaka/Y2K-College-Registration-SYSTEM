@@ -1,0 +1,8 @@
+{
+    "name": "Y2K_COLLEGE__REGISTRATION_SYSTEM",
+    "version": "1.0.0",
+    "keywords": ["util", "functional", "server", "client", "browser"],
+    "author": "shaka",
+    "contributors": [],
+    "dependencies": {}
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y2K College Registration</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("XeHNWTD9Xn1HdMWcf"); // Your public key
+        })();
+
+        function sendEmail(formId) {
+            const form = document.getElementById(formId);
+
+            emailjs.sendForm('service_njpm0mi', 'template_045k5q3', form)
+                .then(() => {
+                    alert("Thank you! We have received your registration.");
+                    form.reset();
+                    resetDisabilityFields(formId);
+                })
+                .catch((error) => {
+                    console.error('FAILED...', error);
+                    alert("Submission failed. Please check your network or contact support.");
+                });
+
+            return false; // Prevent default form submission
+        }
+
+        function validateForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const fileInputs = form.querySelectorAll('input[type="file"]');
+
+            for (let input of fileInputs) {
+                const file = input.files[0];
+                if (file && file.type !== 'application/pdf') {
+                    alert("Only PDF files are allowed!");
+                    return false;
+                }
+            }
+
+            sendEmail(form.id); // Call sendEmail with form ID
+            return true;
+        }
+
+        function toggleDisabilityInput(formType) {
+            const disabilitySelect = document.getElementById(`disability${formType}`);
+            const disabilityContainer = document.getElementById(`disability-type-container-${formType}`);
+            disabilityContainer.style.display = (disabilitySelect.value === "yes") ? "block" : "none";
+        }
+
+        function resetDisabilityFields(formId) {
+            const containers = document.querySelectorAll(`[id^="disability-type-container"]`);
+            containers.forEach(container => container.style.display = "none");
+        }
+
+        function showForm(formType) {
+            document.getElementById("highschoolForm").style.display = (formType === "highschool") ? "block" : "none";
+            document.getElementById("shortcoursesForm").style.display = (formType === "shortcourses") ? "block" : "none";
+        }
+
+        function displayFileName(inputId, displayId) {
+            const input = document.getElementById(inputId);
+            const display = document.getElementById(displayId);
+            display.textContent = input.files.length ? `Selected file: ${input.files[0].name}` : "";
+        }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="https://th.bing.com/th/id/OIP.-xqbknIAa1U6zGUtFJ6PjQHaHa?rs=1&pid=ImgDetMain" 
+                 alt="Y2K College Logo" class="logo-image">
+        </div>
+        <h1>Y2K College Registration</h1>
+        <br>
+        <p>Contact: 021 461 3795 / <a href="mailto:info@y2kcollege.com" style="color: white;"> info@y2kcollege.com</a></p>
+    </header>
+
+    <!-- Registration Options -->
+    <section class="options-section">
+        <h2>Choose Your Registration Type Below</h2>
+         <br> 
+        <div class="buttons-container">
+            <button onclick="showForm('highschool')" class="option-btn" aria-label="High School Registration">High School Registration</button>
+            <button onclick="showForm('shortcourses')" class="option-btn" aria-label="Short Courses Registration">Short Courses Registration</button>
+        </div>
+    </section>
+
+    <!-- Forms Section -->
+    <section class="form-section">
+     
+        <!-- High School Registration -->
+        <form id="highschoolForm" class="form" onsubmit="return validateForm(event)" enctype="multipart/form-data">
+            <h3>High School Registration</h3>
+            
+            <label for="lastNameHigh">Full Name & Last Name:</label>
+            <input type="text" id="lastHigh" name="lastNameHigh" placeholder="Enter Last Name" required>
+              <label for="emailHigh">Email:</label>
+        <input type="email" id="emailHigh" name="emailHigh" placeholder="Enter Email" required>
+        
+
+            <label for="countryHigh">Country of Origin:</label>
+            <input type="text" id="countryHigh" name="countryHigh" placeholder="Enter Country" required>
+            
+            <label for="dobHigh">Date of Birth:</label>
+            <input type="date" id="dobHigh" name="birthHigh" required>
+
+            <label for="phoneHigh">Phone Number:</label>
+            <input type="tel" id="phone" name="phoneHigh" placeholder="+27" required>
+            
+          
+        <label for="studentNameHigh">Physical Addres:</label>
+            <input type="text" id="student" name="studentAddress" placeholder="Enter your physical address" required>
+
+        <label for="grade">Select Grade:</label>
+        <select id="grade" name="grade" required>
+            <option value="">Choose Grade:</option>
+            <option value="Grade 8">Grade 8</option>
+            <option value="Grade 9">Grade 9</option>
+            <option value="Grade 10">Grade 10</option>
+            <option value="Grade 11">Grade 11</option>
+            <option value="Grade 12">Grade 12</option>
+            <option value="Matric Rewrite">MATRIC REWRITE/UPGRADE</option>
+        </select>
+
+
+
+            
+
+            <label for="disabilityHigh">Any Disability?</label>
+            <select id="disabilityHigh" name="disabilityHigh" onchange="toggleDisabilityInput('High')" required>
+                <option value="">Select</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            <div id="disability-type-container-High" style="display: none;">
+                <label for="disabilityTypeHigh">Specify Disability:</label>
+                <input type="text" id="disabilityTypeHigh" name="typeHigh" placeholder="Type of disability">
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        
+           <!-- Short Courses Registration -->
+        <form id="shortcoursesForm" class="form" onsubmit="return validateForm(event)" enctype="multipart/form-data">
+            <h3>Short Courses Registration</h3>
+            
+            <label for="lastNameHigh">Full Name & Last Name:</label>
+            <input type="text" id="lastCourse" name="lastNameHigh" placeholder="Enter Last Name" required>
+            
+              <label for="emailCourse">Email:</label>
+        <input type="email" id="emailHigh" name="emailCourse" placeholder="Enter Email" required>
+        
+
+            <label for="countryCourse">Country of Origin:</label>
+            <input type="text" id="countryHigh" name="countryCourse" placeholder="Enter Country" required>
+            
+            <label for="birthCourse">Date of Birth:</label>
+            <input type="date" id="dobHigh" name="birthCourse" required>
+
+            <label for="phoneCourse">Phone Number:</label>
+            <input type="tel" id="phone" name="phoneCourse" placeholder="+27" required>
+            
+          
+        <label for="courseAddress">Physical Addres:</label>
+            <input type="text" id="student" name="courseAddress" placeholder="Enter your physical address" required>
+
+        <label for="course">Select Course:</label>
+        <select id="grade" name="course" required>
+            <option value="">Choose Course:</option>
+            <option value="BUSINESS MANAGEMENT COURSE">BUSINESS MANAGEMENT COURSE</option>
+            <option value="BUSINESS ADMINISTRATION COURSE">BUSINESS ADMINISTRATION COURSE</option>
+            <option value="CUSTOMS CLEARING AGENT COURSE">CUSTOMS CLEARING AGENT COURSE</option>
+            <option value="SUPPLYCHAIN MANAGER COURSE">SUPPLYCHAIN MANAGER COURSE</option>
+            <option value="CUSTOMS COMPLIANCE MANAGER COURSE">CUSTOMS COMPLIANCE MANAGER COURSE</option>
+            <option value="FINANCIAL ACCOUNTING COURSE">FINANCIAL ACCOUNTING COURSE</option>
+            <option value="ENGLISH COURSE">ENGLISH COURSE</option>
+        </select>
+
+
+
+            
+            <p id="fileDisplayHigh" class="file-display"></p>
+
+            <label for="disaCourse">Any Disability?</label>
+            <select id="disabilityHigh" name="disaCourse" onchange="toggleDisabilityInput('High')" required>
+                <option value="">Select</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            <div id="disability-type-container-High" style="display: none;">
+                <label for="typeCourse">Specify Disability:</label>
+                <input type="text" id="disabilityTypeHigh" name="typeCourse" placeholder="Type of disability">
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+
+    </section>
+    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+    <!-- Footer -->
+    <footer>
+        
+        <p>&copy; 2024 Y2K College | Contact: 021 461 3795 / <a href="mailto:info@y2kcollege.com" style="color: white;"> info@y2kcollege.com</a></p>
+    </footer>
+</body>
+</html>
